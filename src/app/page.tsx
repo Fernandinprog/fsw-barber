@@ -1,4 +1,4 @@
-import { SearchIcon } from "lucide-react";
+import {  EyeIcon, FootprintsIcon, SearchIcon } from "lucide-react";
 import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
 import { Input } from "./_components/ui/input";
@@ -12,7 +12,7 @@ import BarbershopItem from "./_components/barbershop-item";
 
 const Home = async () => {
   const barbershops = await db.barbershop.findMany({})
-  console.log(barbershops)
+  
   return (
         <div className="flex flex-col ">
         <Header/>
@@ -26,6 +26,27 @@ const Home = async () => {
               </Button>
 
             </div>
+        </div>
+        <div className="flex mt-2 ml-5 gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+          <Button className="gap-2" variant={"secondary"}>
+            <Image src="/heroicons_scissors-20-solid.svg" alt="Cabelo" width={20} height={20}/>
+            Cabelo</Button>
+
+            <Button className="gap-2" variant={"secondary"}>
+            <Image src="/mdi_mustache.png" alt="Barba" width={20} height={20}/>
+            Barba</Button>
+
+            <Button className="gap-2" variant={"secondary"}>
+            <Image src="/mdi_razor-double-edge.svg" alt="acabamento" width={20} height={20}/>
+            Acabamento</Button>
+
+            <Button className="gap-2" variant={"secondary"}>
+              <FootprintsIcon size={16}/>
+            Pezinho</Button>
+
+            <Button className="gap-2" variant={"secondary"}>
+            <EyeIcon size={16}/>
+            Sobrancelha</Button>
         </div>
 
         <div className="relative w-full h[150px] mt-4 rounded-xl   ">
