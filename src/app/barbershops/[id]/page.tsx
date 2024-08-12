@@ -1,3 +1,5 @@
+
+import PhoneItem from "@/app/_components/phone-item";
 import ServiceItem from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 import { db } from "@/app/_lib/prisma";
@@ -27,6 +29,8 @@ const Barbershop = async ({params}: BarbershopProps) => {
     if(!barbershop) {
         return notFound()
     }
+
+    
     return (
         <div>
             {/*BANNER*  Barbershop*/} 
@@ -51,6 +55,7 @@ const Barbershop = async ({params}: BarbershopProps) => {
                 <MenuIcon/>
             </Button>   
             </div>
+
              {/*NOME DA BARBEARIA*/} 
             <div className="p-5 border-b  border-solid">
                 <h1 className="text-xl font-bold mb-3">{barbershop?.name}</h1>
@@ -64,12 +69,13 @@ const Barbershop = async ({params}: BarbershopProps) => {
                 </div>
 
             </div>
-             {/*SOBRE*/} 
 
+             {/*SOBRE*/} 
             <div className="p-5 border-b  border-solid space-y-3">
                 <h2 className="text-xs font-bold text-gray-400 uppercase mb-3">Sobre nos</h2>
             <p className="text-sm text-justify">{barbershop.description}</p>
             </div>
+
             {/*SERVIÇOS*/}
             <div className="p-5 border-b  border-solid space-y-3">
             <h2 className="text-xs font-bold text-gray-400 uppercase mb-3">Serviços</h2>
@@ -82,6 +88,13 @@ const Barbershop = async ({params}: BarbershopProps) => {
 
                     </div>
             
+            </div>
+            {/*CONTATO*/}
+            <div className="p-5 border-b  border-solid space-y-3">
+                    {barbershop.phones.map((phone) => (
+                        <PhoneItem key={phone} phone={phone}/>
+                    ))}
+           
             </div>
         </div>
      );

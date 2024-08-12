@@ -3,11 +3,12 @@ import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
 import { Input } from "./_components/ui/input";
 import  Image from "next/image";
-import { Card, CardContent } from "./_components/ui/card";
+
 import { db } from "./_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
 import { quickSearchOptional } from "./_constantes/search";
 import BookingItem from "./_components/booking-item";
+import Footer from "./_components/footer";
 
 
 
@@ -73,13 +74,7 @@ const Home = async () => {
           </div>
 
             {/*Footer*/}
-            <span>
-            <Card className="flex  items-center mt-5 ">
-            <CardContent className="py-6 px-5">
-              <p className="font-sm text-gray-400">© 2023 Copyright <span>Fernando Barber</span></p>
-            </CardContent>
-          </Card>
-            </span>
+            
           </div>
   );
 }
