@@ -8,7 +8,6 @@ import { db } from "./_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
 import { quickSearchOptional } from "./_constantes/search";
 import BookingItem from "./_components/booking-item";
-import Footer from "./_components/footer";
 
 
 

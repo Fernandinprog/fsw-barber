@@ -1,6 +1,7 @@
 
 
 interface QuickSearchOptional {
+    
     icon: string
     title: string
   }
@@ -8,7 +9,8 @@ interface QuickSearchOptional {
  export const quickSearchOptional: QuickSearchOptional[] = [
     {
       title: 'Cabelo',
-      icon: "/heroicons_scissors-20-solid.svg"
+      icon: "/heroicons_scissors-20-solid.svg",
+      
     },
     {
       title: 'Barba',

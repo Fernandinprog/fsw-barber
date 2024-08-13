@@ -14,8 +14,8 @@ import { Badge } from "./ui/badge";
                     <h3 className="text-xl font-semibold">Corte de cabelo</h3>
 
                   <div className="flex items-center gap-2 ">
-                    <Avatar className="w-6 h-6 rounded-full">
-                      <AvatarImage src="https://github.com/diego3g.png" alt="Diego Fernandes" className="rounded-full" />
+                    <Avatar >
+                      <AvatarImage src="https://github.com/diego3g.png" alt="Diego Fernandes" className="w-6 h-6  rounded-full" />
                     </Avatar>
                     <p className="text-sm">Barbearia FSW</p>
                   </div>
