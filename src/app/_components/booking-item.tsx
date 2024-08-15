@@ -3,6 +3,7 @@ import { Card, CardContent } from "./ui/card"
 import { Badge } from "./ui/badge"
 
 export const BookingItem = () => {
+
   return (
     <>
       <h2 className="ml-5 mt-6 text-sm font-bold uppercase text-gray-400">
