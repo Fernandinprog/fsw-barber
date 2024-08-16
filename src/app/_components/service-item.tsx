@@ -16,8 +16,8 @@ import { useEffect, useState } from "react"
 import { addDays, format, set } from "date-fns"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { createBooking } from "./_actions/create-booking"
-import { getBookings } from "./_actions/get-bookings"
+import { createBooking } from "../_actions/create-booking"
+import { getBookings } from "../_actions/get-bookings"
 import SignInDialog from "./sign-in-dialog"
 import { Dialog, DialogContent } from "./ui/dialog"
 
@@ -54,6 +54,9 @@ const getTimeList = (booking: Booking[]) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0])
     const minute = Number(time.split(":")[1])
+
+   
+    
     const hasBookingOnCurrentTime = booking.some(
       (booking) =>
         booking.date.getHours() === hour &&
