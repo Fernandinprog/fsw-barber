@@ -12,8 +12,8 @@ import {
   SheetTitle,
 } from "./ui/sheet"
 import { Calendar } from "./ui/calendar"
-import { useEffect, useState } from "react"
-import { addDays, format, set } from "date-fns"
+import { useEffect, useMemo, useState } from "react"
+import { addDays, format, isPast, isToday, set } from "date-fns"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
 import { createBooking } from "../_actions/create-booking"
@@ -49,18 +49,25 @@ const TIME_LIST = [
   "17:30",
   "18:00",
 ]
+interface GetTimeListProps {
+  bookings: Booking[]
+  selectedDay: Date
+}
 
-const getTimeList = (booking: Booking[]) => {
+const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0])
-    const minute = Number(time.split(":")[1])
+    const minutes = Number(time.split(":")[1])
 
-   
-    
-    const hasBookingOnCurrentTime = booking.some(
+    const timeIsOnThePast = isPast(set(new Date(), { hours: hour, minutes }))
+    if (timeIsOnThePast && isToday(selectedDay)) {
+      return false
+    }
+
+    const hasBookingOnCurrentTime = bookings.some(
       (booking) =>
         booking.date.getHours() === hour &&
-        booking.date.getMinutes() === minute,
+        booking.date.getMinutes() === minutes,
     )
 
     if (hasBookingOnCurrentTime) {
@@ -122,7 +129,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
       await createBooking({
         serviceId: service.id,
-        
+
         date: newDate,
       })
       handleBookingSheetOpenChange()
@@ -132,6 +139,15 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       toast.error("Erro ao criar reserva")
     }
   }
+
+  const timeList = useMemo(() => {
+    if (!selectedDay) return []
+    return getTimeList({
+      bookings: daysBookings,
+      selectedDay,
+    })
+  }, [daysBookings, selectedDay])
+
   return (
     <>
       <Card>
@@ -204,21 +220,21 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   </div>
                   {selectedDay && (
                     <div className="flex gap-3 overflow-x-auto p-5 [&::-webkit-scrollbar]:hidden">
-                      {getTimeList(daysBookings).map((time) => (
-                        <Button
-                          key={time}
-                          variant={
-                            selectedTime === time ? "default" : "outline"
-                          }
-                          className="rounded-full"
-                          onClick={() => {
-                            handleTimeSelect(time)
-                          }}
-                        >
-                          {time}
-                        </Button>
-                      ))}
-                    </div>
+                      {timeList.length > 0 ? 
+                        timeList.map((time) => (
+                          <Button
+                            key={time}
+                            variant={
+                              selectedTime === time ? "default" : "outline"
+                            }
+                            className="rounded-full"
+                            onClick={() => {handleTimeSelect(time)}}
+                          >
+                            {time}
+                          </Button>
+                        )): <p className="text-sm text-red-500">Sem horarios disponíveis para essa data!</p>
+                       } 
+                        </div>
                   )}
                   {selectedTime && selectedDay && (
                     <div className="border-b border-solid py-5">
@@ -270,7 +286,8 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       </Card>
 
       <Dialog
-        open={signInDialogIsOpen} onOpenChange={(open) => setSignInDialoIsgOpen(open)}
+        open={signInDialogIsOpen}
+        onOpenChange={(open) => setSignInDialoIsgOpen(open)}
       >
         <DialogContent className="w-[90%]">
           <SignInDialog />
